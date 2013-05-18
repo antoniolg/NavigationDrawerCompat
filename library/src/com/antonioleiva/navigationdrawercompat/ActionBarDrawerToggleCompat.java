@@ -15,6 +15,7 @@ package com.antonioleiva.navigationdrawercompat;/*
  */
 
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.*;
 import android.graphics.drawable.Drawable;
@@ -49,29 +50,29 @@ import com.actionbarsherlock.view.MenuItem;
 public class ActionBarDrawerToggleCompat implements DrawerLayout.DrawerListener {
 
     private interface ActionBarDrawerToggleImpl {
-        Drawable getThemeUpIndicator(SherlockFragmentActivity activity);
+        Drawable getThemeUpIndicator(Activity activity);
 
-        Object setActionBarUpIndicator(Object info, SherlockFragmentActivity activity,
+        Object setActionBarUpIndicator(Object info, Activity activity,
                                        Drawable themeImage, int contentDescRes);
 
-        Object setActionBarDescription(Object info, SherlockFragmentActivity activity, int contentDescRes);
+        Object setActionBarDescription(Object info, Activity activity, int contentDescRes);
     }
 
     private static class ActionBarDrawerToggleImplBase implements ActionBarDrawerToggleImpl {
         @Override
-        public Drawable getThemeUpIndicator(SherlockFragmentActivity activity) {
+        public Drawable getThemeUpIndicator(Activity activity) {
             return null;
         }
 
         @Override
-        public Object setActionBarUpIndicator(Object info, SherlockFragmentActivity activity,
+        public Object setActionBarUpIndicator(Object info, Activity activity,
                                               Drawable themeImage, int contentDescRes) {
             // No action bar to set.
             return info;
         }
 
         @Override
-        public Object setActionBarDescription(Object info, SherlockFragmentActivity activity, int contentDescRes) {
+        public Object setActionBarDescription(Object info, Activity activity, int contentDescRes) {
             // No action bar to set
             return info;
         }
@@ -79,19 +80,19 @@ public class ActionBarDrawerToggleCompat implements DrawerLayout.DrawerListener 
 
     private static class ActionBarDrawerToggleImplSherlock implements ActionBarDrawerToggleImpl {
         @Override
-        public Drawable getThemeUpIndicator(SherlockFragmentActivity activity) {
+        public Drawable getThemeUpIndicator(Activity activity) {
             return ActionBarDrawerToggleSherlock.getThemeUpIndicator(activity);
         }
 
         @Override
-        public Object setActionBarUpIndicator(Object info, SherlockFragmentActivity activity,
+        public Object setActionBarUpIndicator(Object info, Activity activity,
                                               Drawable themeImage, int contentDescRes) {
             return ActionBarDrawerToggleSherlock.setActionBarUpIndicator(info, activity,
                     themeImage, contentDescRes);
         }
 
         @Override
-        public Object setActionBarDescription(Object info, SherlockFragmentActivity activity, int contentDescRes) {
+        public Object setActionBarDescription(Object info, Activity activity, int contentDescRes) {
             return ActionBarDrawerToggleSherlock.setActionBarDescription(info, activity,
                     contentDescRes);
         }
@@ -102,7 +103,7 @@ public class ActionBarDrawerToggleCompat implements DrawerLayout.DrawerListener 
     // android.R.id.home as defined by public API in v11
     private static final int ID_HOME = 0x0102002c;
 
-    private final SherlockFragmentActivity mActivity;
+    private final Activity mActivity;
     private final DrawerLayout mDrawerLayout;
     private boolean mDrawerIndicatorEnabled = true;
 
@@ -134,7 +135,7 @@ public class ActionBarDrawerToggleCompat implements DrawerLayout.DrawerListener 
      * @param closeDrawerContentDescRes A String resource to describe the "close drawer" action
      *                                  for accessibility
      */
-    public ActionBarDrawerToggleCompat(SherlockFragmentActivity activity, DrawerLayout drawerLayout,
+    public ActionBarDrawerToggleCompat(Activity activity, DrawerLayout drawerLayout,
                                        int drawerImageRes, int openDrawerContentDescRes, int closeDrawerContentDescRes) {
         mActivity = activity;
         mDrawerLayout = drawerLayout;

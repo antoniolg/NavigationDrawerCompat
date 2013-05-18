@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.actionbarsherlock.R;
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import java.lang.reflect.Method;
 
@@ -43,21 +42,13 @@ class ActionBarDrawerToggleSherlock {
             R.attr.homeAsUpIndicator
     };
 
-    public static Object setActionBarUpIndicator(Object info, SherlockFragmentActivity activity,
+    public static Object setActionBarUpIndicator(Object info, Activity activity,
                                                  Drawable drawable, int contentDescRes) {
         if (info == null) {
             info = new SetIndicatorInfo(activity);
         }
         final SetIndicatorInfo sii = (SetIndicatorInfo) info;
-        if (sii.setHomeAsUpIndicator != null) {
-            try {
-                final ActionBar actionBar = activity.getSupportActionBar();
-                sii.setHomeAsUpIndicator.invoke(actionBar, drawable);
-                sii.setHomeActionContentDescription.invoke(actionBar, contentDescRes);
-            } catch (Exception e) {
-                Log.w(TAG, "Couldn't set home-as-up indicator via JB-MR2 API", e);
-            }
-        } else if (sii.upIndicatorView != null) {
+        if (sii.upIndicatorView != null) {
             sii.upIndicatorView.setImageDrawable(drawable);
         } else {
             Log.w(TAG, "Couldn't set home-as-up indicator");
@@ -65,7 +56,7 @@ class ActionBarDrawerToggleSherlock {
         return info;
     }
 
-    public static Object setActionBarDescription(Object info, SherlockFragmentActivity activity,
+    public static Object setActionBarDescription(Object info, Activity activity,
                                                  int contentDescRes) {
         if (info == null) {
             info = new SetIndicatorInfo(activity);
@@ -73,8 +64,9 @@ class ActionBarDrawerToggleSherlock {
         final SetIndicatorInfo sii = (SetIndicatorInfo) info;
         if (sii.setHomeAsUpIndicator != null) {
             try {
-                final ActionBar actionBar = activity.getSupportActionBar();
-                sii.setHomeActionContentDescription.invoke(actionBar, contentDescRes);
+                // TODO With ABS it will never be executed. Clean code.
+                //final ActionBar actionBar = activity.getSupportActionBar();
+                //sii.setHomeActionContentDescription.invoke(actionBar, contentDescRes);
             } catch (Exception e) {
                 Log.w(TAG, "Couldn't set content description via JB-MR2 API", e);
             }
@@ -101,7 +93,7 @@ class ActionBarDrawerToggleSherlock {
         public Method setHomeActionContentDescription;
         public ImageView upIndicatorView;
 
-        SetIndicatorInfo(SherlockFragmentActivity activity) {
+        SetIndicatorInfo(Activity activity) {
             try {
                 setHomeAsUpIndicator = ActionBar.class.getDeclaredMethod("setHomeAsUpIndicator",
                         Drawable.class);
