@@ -22,7 +22,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 /**
@@ -234,6 +233,8 @@ public class ActionBarDrawerToggleCompat implements DrawerLayout.DrawerListener 
             } else {
                 mDrawerLayout.openDrawer(GravityCompat.START);
             }
+
+            return true;
         }
         return false;
     }
